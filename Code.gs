@@ -94,7 +94,10 @@ function getCases(user) {
   }
   
   //Find the index of tomorrows date if the current month is selected (add 16 hours to convert to Taipei time)
-  var date = new Date().addHours(16);
+  var date = new Date()
+  if (Session.getScriptTimeZone() == "America/Los_Angeles") {
+    date.addHours(16);
+  }
   var month = date.getMonth();
   date = date.getDate() + 1;
   var date_index = 0;
@@ -112,7 +115,7 @@ function getCases(user) {
   else {
     date_index = colors.length
   }
-  
+
   //Add the case IDs to the assigned_te_cases array if the case is TE (green background).
   var assigned_te_cases = [];
   for (var i = 0; i < date_index; i++) {
