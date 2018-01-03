@@ -221,7 +221,7 @@ function getFeedback() {
     }
   }
   
-  return feedback
+  return feedback.reverse();
 }
 
 function include(filename) {
