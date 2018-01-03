@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(getArray);
+    
+      function onSuccess(my_array) {
+        var data_table = new google.visualization.DataTable();
+        data_table.addColumn('string', 'Case ID');
+        data_table.addColumn('number', 'Basics');
+        data_table.addColumn('number', 'Language and Clarity');
+        data_table.addColumn('number', 'Style');
+        data_table.addColumn('number', 'Noncompliance');
+        data_table.addColumn('string', 'Comments');
+        data_table.addRows(my_array);
+        var options = {showRowNumber: false, width: '100%'}
+        var table = new google.visualization.Table(document.getElementById('vis_div'));
+        table.draw(data_table, options);
+      }
+      
+      function onFailure(error) {
+        var div = document.getElementById('output');
+        div.innerHTML = "ERROR: " + error.message;
+      }
+      
+      function getArray() {
+        google.script.run.withSuccessHandler(onSuccess).getFeedback();
+        google.script.run.withFailureHandler(onFailure).getFeedback();
+      }
+
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div id="vis_div" style="width: 100%; height: 400px;"></div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

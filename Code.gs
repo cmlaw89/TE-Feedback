@@ -3,6 +3,7 @@ function onOpen() {
   SpreadsheetApp.getUi()
       .createMenu('Wallace')
       .addItem('Translation Editing Feedback', 'teFeedback')
+      .addItem('View Feedback', 'viewFeedback')
       .addToUi();  
 }
 
@@ -38,6 +39,19 @@ function teFeedback() {
     html = html.evaluate().setTitle("Translation Editing Feedback");
     SpreadsheetApp.getUi().showSidebar(html);
   }
+}
+
+
+function viewFeedback() {
+  var html = HtmlService.createTemplateFromFile("View_Feedback_Index");
+  html = html.evaluate()
+  .setTitle("View Feedback")
+  .setHeight(450)
+  .setWidth(750)
+  .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+  
+  
+  SpreadsheetApp.getUi().showModalDialog(html, "Submitted Feedback")
 }
 
 
@@ -192,6 +206,23 @@ function getOutstanding(cases) {
   return incomplete_cases
 }
 
+
+function getFeedback() {
+  //Extracts the submitted feedback for the active user
+  
+  var user = Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1);
+  var TE_Feedback_sheet = SpreadsheetApp.openById("13QDsOkVGVPMsbqg0_Qyet8cg3y9ySzR3XV9IlDLmEBs").getSheetByName("TE Feedback");
+  var feedback = []
+  for (var i = 2; i < TE_Feedback_sheet.getLastRow() + 1; i++) {
+    var entry = TE_Feedback_sheet.getRange(i, 2, 1, 7).getValues()[0];
+    if (entry[0] == user) {
+      entry[6] = entry[6].toString();
+      feedback.push(entry.slice(1));
+    }
+  }
+  
+  return feedback
+}
 
 function include(filename) {
   //Adds stylesheet and javascript to Index.html

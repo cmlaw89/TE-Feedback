@@ -1,5 +1,5 @@
 <script>
-  function getFeedback(month) {
+  function getFeedback(user, month) {
     var dropdown = document.querySelector("form").select1;
     var selectedIndex = dropdown.selectedIndex;
     var selectedValue = dropdown.options[selectedIndex].value;
@@ -83,7 +83,7 @@
     if (send) {
       google.script.run
         .withSuccessHandler(google.script.host.close)
-        .submitFeedback([today.toString(), selectedValue + month, 
+        .submitFeedback([today.toString(), user, selectedValue + month, 
                 basics, lAc, style, non_c, comments]);
     }
   }
