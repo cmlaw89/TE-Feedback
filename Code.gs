@@ -24,7 +24,7 @@ function teFeedback() {
                 "NOV": "11",
                 "DEC": "12"}
   
-  var user =  Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1)
+  var user = Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1)
   var cases = getCases(user);
   if (cases == false) {
     SpreadsheetApp.getUi().alert("You have no cases assigned for this month.", SpreadsheetApp.getUi().ButtonSet.OK)
@@ -93,8 +93,8 @@ function getCases(user) {
     }
   }
   
-  //Find the index of tomorrows date if the current month is selected
-  var date = new Date();
+  //Find the index of tomorrows date if the current month is selected (add 16 hours to convert to Taipei time)
+  var date = new Date().addHours(16);
   var month = date.getMonth();
   date = date.getDate() + 1;
   var date_index = 0;
@@ -195,4 +195,11 @@ function include(filename) {
   
   return HtmlService.createHtmlOutputFromFile(filename)
       .getContent();
+}
+
+
+
+Date.prototype.addHours = function(h){
+    this.setHours(this.getHours()+h);
+    return this;
 }
