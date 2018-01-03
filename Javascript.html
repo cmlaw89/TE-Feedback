@@ -1,5 +1,6 @@
 <script>
   function getFeedback(user, month) {
+    //Extracts the values input to the form by the user and validates the input
     var dropdown = document.querySelector("form").select1;
     var selectedIndex = dropdown.selectedIndex;
     var selectedValue = dropdown.options[selectedIndex].value;
@@ -11,6 +12,8 @@
     var comments = document.getElementById("comments_input").value;
     
     var send = true;
+    
+    //Validation
     
     if (selectedValue == "") {
       document.getElementById("case_val").innerHTML = "Please select the case number";
@@ -86,5 +89,12 @@
         .submitFeedback([today.toString(), user, selectedValue + month, 
                 basics, lAc, style, non_c, comments]);
     }
+  }
+  
+  function auto_grow(element) {
+    //auto adujst the hieght of a textarea (comment box)
+  
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
   }
 </script>
