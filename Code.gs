@@ -146,8 +146,8 @@ function submitFeedback(values) {
   
   //Delete existing feedback with the same case ID
   var feedback_sheet = SpreadsheetApp.openById("13QDsOkVGVPMsbqg0_Qyet8cg3y9ySzR3XV9IlDLmEBs").getSheetByName("TE Feedback");
-  var case_ID = values[1];
-  var case_ID_column = feedback_sheet.getRange(2, 2, feedback_sheet.getLastRow() - 1, 1).getValues();
+  var case_ID = values[2];
+  var case_ID_column = feedback_sheet.getRange(2, 3, feedback_sheet.getLastRow() - 1, 1).getValues();
   var row_index = -1;
   var i = 0;
   while (row_index == -1 && i < case_ID_column.length) {
