@@ -183,7 +183,7 @@ function getOutstanding(cases) {
                 "DEC": " December"}
   
   var TPR_Feedback_sheet = SpreadsheetApp.openById("13QDsOkVGVPMsbqg0_Qyet8cg3y9ySzR3XV9IlDLmEBs").getSheetByName("TE Feedback");  
-  var complete = TPR_Feedback_sheet.getRange(2, 2, TPR_Feedback_sheet.getLastRow() - 1, 1).getValues();
+  var complete = TPR_Feedback_sheet.getRange(2, 3, TPR_Feedback_sheet.getLastRow() - 1, 1).getValues();
   var completed_cases = [];
   for (i = 0; i < complete.length; i++) {
     completed_cases.push(complete[i][0].slice(0, 7));
