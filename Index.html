@@ -24,21 +24,44 @@
     <select name='select1' required>
     <option value="" disabled selected hidden>Choose</option>
     <? for (var i = 0; i < cases.length; i++) { ?>
+       <? if (incomplete_cases.indexOf(cases[i]) != -1) { ?>
+         <option id="due" value = "<?= cases[i] ?>"><?= cases[i]; ?></option>
+       <? } else { ?>
          <option value = "<?= cases[i] ?>"><?= cases[i]; ?></option>
+       <? } ?>
     <? } ?>
     </select> 
     <div id="case_val"></div>
     <br>
-    <h2>Basics:</h2>
+    <h2><a TITLE="Salutation included and correctly formatted
+All text translated
+Font - Times New Roman, size 12, uniform, no Chinese font
+No spelling errors/typos&#10;No contractions
+All acronyms/initialisms defined
+In-text references (author names) presented correctly
+For hybrid documents - translated portion highlighted">Basics:</a></h2>
     <input id="basics_input" placeholder="Your answer" /><br>
     <div id="basics_val"></div>
-    <h2>Language and Clarity:</h2>
+    <h2><a TITLE="Coherence/understandability
+Tense usage
+Grammar –  comparatives, prepositions, noun-verb agreement, anthropomorphisms, nominalizations, expletive sentence structure, noun strings
+Pronoun use (ambiguous referent)
+Academic vocabulary versus colloquialisms
+Known redundant phrases (For example, “on the other hand”)
+Consistency – key terms, formatting, logic, citation style
+Run-on sentences
+Obviously awkward sentence constructions">Language and Clarity:</a></h2>
     <input id="lAc_input" placeholder="Your answer" /><br>
     <div id="lAc_val"></div>
-    <h2>Style:</h2>
+    <h2><a TITLE="Use of “we”
+P-values
+Symbols/units/currency
+Listing
+Scientific number rule">Style:</a></h2>
     <input id="style_input" placeholder="Your answer" /><br>
     <div id="style_val"></div>
-    <h2>Noncompliance:</h2>
+    <h2><a TITLE="Inconsistent application of known rules/standards (suddenly not applying a particular rule) 
+Consistent failure to implement instructions provided by editors and/or proofreaders/repeating mistakes">Noncompliance:</a></h2>
     <input id="non_c_input" placeholder="Your answer" /><br>
     <div id="non_c_val" placeholder="Your answer"></div>
     <h2>Comments:</h2>
