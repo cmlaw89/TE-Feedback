@@ -1,6 +1,8 @@
 <script>
   function getFeedback(user, month) {
     //Extracts the values input to the form by the user and validates the input
+    document.getElementById("submit_button").disabled = true;
+    
     var dropdown = document.querySelector("form").select1;
     var selectedIndex = dropdown.selectedIndex;
     var selectedValue = dropdown.options[selectedIndex].value;
