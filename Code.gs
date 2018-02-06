@@ -7,7 +7,24 @@ function onOpen() {
       .addToUi();  
 }
 
-
+function setPermissions() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet()
+  var name = ss.getName().split(" ")[0];
+  if (!(name == "Chris")||(name == "Yankz")) {
+    var email_list_sheet = SpreadsheetApp.openById("1n3PTIw3sO1oxZSNdE_vGHdE7kd8bYeedZOr2kT96dXE")
+                                   .getSheetByName("Editor List & Complaints Email");
+    var email_list = email_list_sheet.getRange(2, 1, email_list_sheet.getLastRow(), 2).getValues();
+    email_list = email_list.join().split(",");
+    var sheets = ss.getSheets();
+    for (var i = 0; i < sheets.length; i++) {
+      var protections = sheets[i].getProtections(SpreadsheetApp.ProtectionType.SHEET);
+      if (protections.length == 0) {
+        var protection = sheets[i].protect();
+        protection.removeEditor(email_list[email_list.indexOf(name) + 1])
+      }
+    }
+  }
+}
 
 function teFeedback() {
   //Opens the feedback sidebar
