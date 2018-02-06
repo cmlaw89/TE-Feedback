@@ -10,7 +10,7 @@ function onOpen() {
 function setPermissions() {
   var ss = SpreadsheetApp.getActiveSpreadsheet()
   var name = ss.getName().split(" ")[0];
-  if (!(name == "Chris")||(name == "Yankz")) {
+  if (!(name == "Chris")) {
     var email_list_sheet = SpreadsheetApp.openById("1n3PTIw3sO1oxZSNdE_vGHdE7kd8bYeedZOr2kT96dXE")
                                    .getSheetByName("Editor List & Complaints Email");
     var email_list = email_list_sheet.getRange(2, 1, email_list_sheet.getLastRow(), 2).getValues();
