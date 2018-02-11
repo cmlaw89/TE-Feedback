@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'  type='text/css'>
+    
+    <?!= include('Stylesheet') ?>
+    <?!= include('Javascript') ?>
+    
+  </head>
+  <body>
+  
+<div id="content">  
+<h1>Welcome <?= user ?></h1>
+<? var incomplete_cases = getOutstanding(cases); ?>
+
+<form name="case_selector">
+  <h2>Select Case ID:</h2>
+    <select name='select1' required>
+    <option value="" disabled selected hidden>Choose</option>
+    <? for (var i = 0; i < cases.length; i++) { ?>
+       <? if (incomplete_cases.indexOf(cases[i]) != -1) { ?>
+         <option id="due" value = "<?= cases[i] ?>"><?= cases[i]; ?></option>
+       <? } else { ?>
+         <option value = "<?= cases[i] ?>"><?= cases[i]; ?></option>
+       <? } ?>
+    <? } ?>
+    </select>
+    <br>Cases that are due are shown in red.
+    <div id="case_val"></div>
+    <br>
+    <h2><a>Basics:</a></h2>
+    <input id="basics_input" placeholder="Your answer" /><br>
+    <div id="basics_val"></div>
+    <h2><a>Language and Clarity:</a></h2>
+    <input id="lAc_input" placeholder="Your answer" /><br>
+    <div id="lAc_val"></div>
+    <h2><a>Style:</a></h2>
+    <input id="style_input" placeholder="Your answer" /><br>
+    <div id="style_val"></div>
+    <h2><a>Noncompliance:</a></h2>
+    <input id="non_c_input" placeholder="Your answer" /><br>
+    <div id="non_c_val" placeholder="Your answer"></div>
+    <h2>Comments:</h2>
+    <textarea id="comments_input" placeholder="Your answer" onkeyup="auto_grow(this)"></textarea><br>
+    <div id="comments_val"></div>
+    </form>
+
+<button id="submit_button" onclick="getFeedback(<?= user ?>, <?= month ?>)">Submit</button>
+</div>
+
+</body>
+</html>
+
+

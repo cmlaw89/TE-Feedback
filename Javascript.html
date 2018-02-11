@@ -1,0 +1,102 @@
+<script>
+  function getFeedback(user, month) {
+    //Extracts the values input to the form by the user and validates the input
+    document.getElementById("submit_button").disabled = true;
+    
+    var dropdown = document.querySelector("form").select1;
+    var selectedIndex = dropdown.selectedIndex;
+    var selectedValue = dropdown.options[selectedIndex].value;
+    var today = new Date();
+    var basics = document.getElementById("basics_input").value;
+    var lAc = document.getElementById("lAc_input").value;
+    var style = document.getElementById("style_input").value;
+    var non_c = document.getElementById("non_c_input").value;
+    var comments = document.getElementById("comments_input").value;
+    
+    var send = true;
+    
+    //Validation
+    
+    if (selectedValue == "") {
+      document.getElementById("case_val").innerHTML = "Please select the case number";
+      send = false;
+    }
+    else {
+      document.getElementById("case_val").innerHTML = "";
+    }
+    
+    if (!isNaN(parseFloat(basics))) {
+      if (parseFloat(basics) < 0 || parseFloat(basics) > 5) {
+        document.getElementById("basics_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("basics_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("basics_val").innerHTML = "Please insert a number between 0 and 5";
+    }
+    
+    if (!isNaN(parseFloat(lAc))) {
+      if (parseFloat(lAc) < 0 || parseFloat(lAc) > 5) {
+        document.getElementById("lAc_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("lAc_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("lAc_val").innerHTML = "Please insert a number between 0 and 5";
+    }
+    
+    if (!isNaN(parseFloat(style))) {
+      if (parseFloat(style) < 0 || parseFloat(style) > 5) {
+        document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("style_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
+    }
+    
+    if (!isNaN(parseFloat(non_c))) {
+      if (parseFloat(non_c) < 0 || parseFloat(non_c) > 5) {
+        document.getElementById("non_c_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("non_c_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("non_c_val").innerHTML = "Please insert a number between 0 and 5";
+    }
+    
+    if (comments == "") {
+      document.getElementById("comments_val").innerHTML = "Please add comments";
+      send = false;
+    }
+    else {
+      document.getElementById("comments_val").innerHTML = "";
+    }
+    
+    if (send) {
+      google.script.run
+        .withSuccessHandler(google.script.host.close)
+        .submitFeedback([today.toString(), user, selectedValue + month, 
+                basics, lAc, style, non_c, comments]);
+    }
+  }
+  
+  function auto_grow(element) {
+    //auto adujst the hieght of a textarea (comment box)
+  
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+  }
+</script>
