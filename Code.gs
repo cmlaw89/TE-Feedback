@@ -150,7 +150,7 @@ function getCases(user) {
   //Add the case IDs to the assigned_te_cases array if the case is TE (green background).
   var assigned_te_cases = [];
   for (var i = 0; i < date_index; i++) {
-    if (colors[i][0] == color_dic[user]) {
+    if ((colors[i][0] == color_dic[user]) && /^O\d\d\d\d\d\d$/.test(cases[i][0])) {
       assigned_te_cases.push(cases[i][0]);
     }
   }
@@ -263,3 +263,5 @@ function getAllIndexes(arr, val) {
     }
     return indexes;
 }
+
+
