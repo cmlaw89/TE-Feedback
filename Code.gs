@@ -97,7 +97,12 @@ function getCases(user) {
                    "Ben": "#b4a7d6",
                    "Richard": "#cc4125", 
                    "Kimberlee": "",
-                   "Samuel": "#00ffff"}
+                   "Samuel": "#00ffff",
+                   "Bryan": "#e6b8af",
+                   "Damien": "#f3e48d",
+                   "Edward": "#9900ff",
+                   "Givens": "#b4f3d1",
+                   "James": "#98c8ff"}
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var month_sheet = ss.getActiveSheet();
