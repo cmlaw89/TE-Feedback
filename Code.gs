@@ -98,7 +98,7 @@ function getCases(user) {
                    "Richard": "#cc4125", 
                    "Kimberlee": "",
                    "Samuel": "#00ffff",
-                   "Bryan": "#e6b8af",
+                   "Bryan": "#db86e8",
                    "Damien": "#f3e48d",
                    "Edward": "#9900ff",
                    "Givens": "#b4f3d1",
