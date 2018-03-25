@@ -92,7 +92,7 @@ function getCases(user) {
   
   var color_dic = {"Chris": "#00ff00",
                    "Mark": "#76a5af",
-                   "Yankz": "#f1c232",
+                   "Yankuba": "#f1c232",
                    "Hannah": "#93c47d",
                    "Ben": "#b4a7d6",
                    "Richard": "#cc4125", 
