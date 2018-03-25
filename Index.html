@@ -16,7 +16,7 @@
 
 <form name="case_selector">
   <h2>Select Case ID:</h2>
-    <select name='select1' required>
+    <select name="select1" onChange="addExistingFeedback(<?= month ?>)" required>
     <option value="" disabled selected hidden>Choose</option>
     <? for (var i = 0; i < cases.length; i++) { ?>
        <? if (incomplete_cases.indexOf(cases[i]) != -1) { ?>

@@ -254,6 +254,15 @@ function include(filename) {
       .getContent();
 }
 
+function getFeedbackCase(caseId) {
+  //Returns the feedback that was submitted for the given case ID
+  var cases = getFeedback();
+  cases = [].concat.apply([], cases);
+  var index = cases.indexOf(caseId);
+  if (index != -1) {
+    return cases.slice(index, index + 6)
+  }
+}
 
 
 Date.prototype.addHours = function(h){
@@ -268,5 +277,3 @@ function getAllIndexes(arr, val) {
     }
     return indexes;
 }
-
-

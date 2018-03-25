@@ -99,4 +99,36 @@
     element.style.height = "5px";
     element.style.height = (element.scrollHeight)+"px";
   }
+  
+
+  function addExistingFeedback(month_year){
+    //Extracts the feedback for the selected case from the database
+    var dropdown = document.querySelector("form").select1;
+    var selectedIndex = dropdown.selectedIndex;
+    var selectedValue = dropdown.options[selectedIndex].value;
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getFeedbackCase(selectedValue + month_year);
+  }
+    
+    
+  function onSuccess(my_array) {
+    //Updates the feedback input fields with the existing values
+    if (my_array) {
+      document.getElementById("basics_input").value = my_array[1];
+      document.getElementById("lAc_input").value = my_array[2];
+      document.getElementById("style_input").value = my_array[3];
+      document.getElementById("non_c_input").value = my_array[4];
+      document.getElementById("comments_input").value = my_array[5];
+    }
+    else {
+      document.getElementById("basics_input").value = "";
+      document.getElementById("lAc_input").value = "";
+      document.getElementById("style_input").value = "";
+      document.getElementById("non_c_input").value = "";
+      document.getElementById("comments_input").value = "";
+    }
+  }
+  
+  
 </script>
