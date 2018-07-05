@@ -35,88 +35,52 @@
       document.getElementById("time_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(mechanics))) {
-      if (parseFloat(mechanics) < 0 || parseFloat(mechanics) > 5) {
-        document.getElementById("mechanics_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("mechanics_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(mechanics) == -1) {
+      document.getElementById("mechanics_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("mechanics_val").innerHTML = "Please insert a number between 0 and 5";
-      send = false;
+      document.getElementById("mechanics_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(grammar))) {
-      if (parseFloat(grammar) < 0 || parseFloat(grammar) > 5) {
-        document.getElementById("grammar_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("grammar_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(grammar) == -1) {
+      document.getElementById("grammar_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("grammar_val").innerHTML = "Please insert a number between 0 and 5";
-      send = false;
+      document.getElementById("grammar_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(terminology))) {
-      if (parseFloat(terminology) < 0 || parseFloat(terminology) > 5) {
-        document.getElementById("terminology_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("terminology_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(terminology) == -1) {
+      document.getElementById("terminology_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("terminology_val").innerHTML = "Please insert a number between 0 and 5";
-      send = false;
+      document.getElementById("terminology_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(l_r))) {
-      if (parseFloat(l_r) < 0 || parseFloat(l_r) > 5) {
-        document.getElementById("l_r_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("l_r_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(l_r) == -1) {
+      document.getElementById("l_r_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("l_r_val").innerHTML = "Please insert a number between 0 and 5";
-      send = false;
+      document.getElementById("l_r_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(u_f))) {
-      if (parseFloat(u_f) < 0 || parseFloat(u_f) > 5) {
-        document.getElementById("u_f_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("u_f_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(u_f) == -1) {
+      document.getElementById("u_f_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("u_f_val").innerHTML = "Please insert a number between 0 and 5";
-      send = false;
+      document.getElementById("u_f_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(style))) {
-      if (parseFloat(style) < 0 || parseFloat(style) > 5) {
-        document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("style_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(style) == -1) {
+      document.getElementById("style_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
-      send = false;
+      document.getElementById("style_val").innerHTML = "";
     }
     
     if (comments == "") {
