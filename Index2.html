@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'  type='text/css'>
+    
+    <?!= include('Stylesheet') ?>
+    <?!= include('Javascript2') ?>
+    
+  </head>
+  <body>
+  
+<div id="content">  
+<h1>Welcome <?= user ?></h1>
+<? var incomplete_cases = getOutstanding(cases); ?>
+
+<form name="case_selector">
+  <h2>Select Case ID:</h2>
+    <select name="select1" onChange="addExistingFeedback(<?= month ?>)" required>
+    <option value="" disabled selected hidden>Choose</option>
+    <? for (var i = 0; i < cases.length; i++) { ?>
+       <? if (incomplete_cases.indexOf(cases[i]) != -1) { ?>
+         <option id="due" value = "<?= cases[i] ?>"><?= cases[i]; ?></option>
+       <? } else { ?>
+         <option value = "<?= cases[i] ?>"><?= cases[i]; ?></option>
+       <? } ?>
+    <? } ?>
+    </select>
+    <br>Cases that are due are shown in red.
+    <div id="case_val"></div>
+    <br>
+    <h2><a>Time:</a></h2>
+    <input id="time_input" placeholder="Your answer" /><br>
+    <div id="time_val"></div>
+    <h2><a>Mechanics:</a></h2>
+    <input id="mechanics_input" placeholder="Your answer" /><br>
+    <div id="mechanics_val"></div>
+    <h2><a>Grammar:</a></h2>
+    <input id="grammar_input" placeholder="Your answer" /><br>
+    <div id="grammar_val"></div>
+    <h2><a>Terminology:</a></h2>
+    <input id="terminology_input" placeholder="Your answer" /><br>
+    <div id="terminology_val"></div>
+    <h2><a>Language/Readability:</a></h2>
+    <input id="l_r_input" placeholder="Your answer" /><br>
+    <div id="l_r_val" placeholder="Your answer"></div>
+    <h2><a>Units/Font:</a></h2>
+    <input id="u_f_input" placeholder="Your answer" /><br>
+    <div id="u_f_val" placeholder="Your answer"></div>
+    <h2><a>Style (Author/House/Journal):</a></h2>
+    <input id="style_input" placeholder="Your answer" /><br>
+    <div id="style_val" placeholder="Your answer"></div>
+    <h2>Comments:</h2>
+    <textarea id="comments_input" placeholder="Your answer" onkeyup="auto_grow(this)"></textarea><br>
+    <div id="comments_val"></div>
+    </form>
+
+<button id="submit_button" onclick="getFeedback(<?= user ?>, <?= month ?>)">Submit</button>
+</div>
+
+</body>
+</html>

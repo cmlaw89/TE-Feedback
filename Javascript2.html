@@ -1,0 +1,183 @@
+<script>
+  function getFeedback(user, month) {
+    //Extracts the values input to the form by the user and validates the input
+    
+    var dropdown = document.querySelector("form").select1;
+    var selectedIndex = dropdown.selectedIndex;
+    var selectedValue = dropdown.options[selectedIndex].value;
+    var today = new Date();
+    var time = document.getElementById("time_input").value;
+    var mechanics = document.getElementById("mechanics_input").value;
+    var grammar = document.getElementById("grammar_input").value;
+    var terminology = document.getElementById("terminology_input").value;
+    var l_r = document.getElementById("l_r_input").value;
+    var u_f = document.getElementById("u_f_input").value;
+    var style = document.getElementById("style_input").value;
+    var comments = document.getElementById("comments_input").value;
+    
+    var send = true;
+    
+    //Validation
+    
+    if (selectedValue == "") {
+      document.getElementById("case_val").innerHTML = "Please select the case number";
+      send = false;
+    }
+    else {
+      document.getElementById("case_val").innerHTML = "";
+    }
+    
+    if (isNaN(parseFloat(time))) {
+      document.getElementById("time_val").innerHTML = "Please insert a number";
+      send = false;
+    }
+    else {
+      document.getElementById("time_val").innerHTML = "";
+    }
+    
+    if (!isNaN(parseFloat(mechanics))) {
+      if (parseFloat(mechanics) < 0 || parseFloat(mechanics) > 5) {
+        document.getElementById("mechanics_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("mechanics_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("mechanics_val").innerHTML = "Please insert a number between 0 and 5";
+      send = false;
+    }
+    
+    if (!isNaN(parseFloat(grammar))) {
+      if (parseFloat(grammar) < 0 || parseFloat(grammar) > 5) {
+        document.getElementById("grammar_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("grammar_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("grammar_val").innerHTML = "Please insert a number between 0 and 5";
+      send = false;
+    }
+    
+    if (!isNaN(parseFloat(terminology))) {
+      if (parseFloat(terminology) < 0 || parseFloat(terminology) > 5) {
+        document.getElementById("terminology_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("terminology_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("terminology_val").innerHTML = "Please insert a number between 0 and 5";
+      send = false;
+    }
+    
+    if (!isNaN(parseFloat(l_r))) {
+      if (parseFloat(l_r) < 0 || parseFloat(l_r) > 5) {
+        document.getElementById("l_r_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("l_r_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("l_r_val").innerHTML = "Please insert a number between 0 and 5";
+      send = false;
+    }
+    
+    if (!isNaN(parseFloat(u_f))) {
+      if (parseFloat(u_f) < 0 || parseFloat(u_f) > 5) {
+        document.getElementById("u_f_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("u_f_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("u_f_val").innerHTML = "Please insert a number between 0 and 5";
+      send = false;
+    }
+    
+    if (!isNaN(parseFloat(style))) {
+      if (parseFloat(style) < 0 || parseFloat(style) > 5) {
+        document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
+        send = false;
+      }
+      else {
+        document.getElementById("style_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
+      send = false;
+    }
+    
+    if (comments == "") {
+      document.getElementById("comments_val").innerHTML = "Please add comments";
+      send = false;
+    }
+    else {
+      document.getElementById("comments_val").innerHTML = "";
+    }
+    
+    if (send) {
+      document.getElementById("submit_button").disabled = true;
+      google.script.run
+        .withSuccessHandler(google.script.host.close)
+        .submitFeedback([today.toString(), user, selectedValue + month, 
+                time, mechanics, grammar, terminology, l_r, u_f, style, comments]);
+    }
+  }
+  
+  function auto_grow(element) {
+    //auto adujst the hieght of a textarea (comment box)
+  
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+  }
+  
+
+  function addExistingFeedback(month_year){
+    //Extracts the feedback for the selected case from the database
+    var dropdown = document.querySelector("form").select1;
+    var selectedIndex = dropdown.selectedIndex;
+    var selectedValue = dropdown.options[selectedIndex].value;
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getFeedbackCase(selectedValue + month_year);
+  }
+    
+    
+  function onSuccess(my_array) {
+    //Updates the feedback input fields with the existing values
+    if (my_array) {
+      document.getElementById("time_input").value = my_array[1];
+      document.getElementById("mechanics_input").value = my_array[2];
+      document.getElementById("grammar_input").value = my_array[3];
+      document.getElementById("terminology_input").value = my_array[4];
+      document.getElementById("l_r_input").value = my_array[5];
+      document.getElementById("u_f_input").value = my_array[6];
+      document.getElementById("style_input").value = my_array[7];
+      document.getElementById("comments_input").value = my_array[8];
+    }
+    else {
+      document.getElementById("time_input").value = "";
+      document.getElementById("mechanics_input").value = "";
+      document.getElementById("grammar_input").value = "";
+      document.getElementById("terminology_input").value = "";
+      document.getElementById("l_r_input").value = "";
+      document.getElementById("u_f_input").value = "";
+      document.getElementById("style_input").value = "";
+      document.getElementById("comments_input").value = "";
+    }
+  }
+  
+  
+</script>

@@ -21,10 +21,13 @@
       function onSuccess(my_array) {
         var data_table = new google.visualization.DataTable();
         data_table.addColumn('string', 'Case ID');
-        data_table.addColumn('string', 'Basics');
-        data_table.addColumn('string', 'Language and Clarity');
-        data_table.addColumn('string', 'Style');
-        data_table.addColumn('string', 'Noncompliance');
+        data_table.addColumn('string', 'Time');
+        data_table.addColumn('string', 'Mechanics');
+        data_table.addColumn('string', 'Grammar');
+        data_table.addColumn('string', 'Terminology');
+        data_table.addColumn('string', 'Language/Readability');
+        data_table.addColumn('string', 'Units/Font');
+        data_table.addColumn('string', 'Style (Author/House/Journal)');
         data_table.addColumn('string', 'Comments');
         data_table.addRows(my_array);
         var options = {showRowNumber: false, width: '100%'}

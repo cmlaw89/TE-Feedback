@@ -48,7 +48,7 @@ function teFeedback() {
     SpreadsheetApp.getUi().alert("You have no cases assigned for this month.", SpreadsheetApp.getUi().ButtonSet.OK)
   }
   else {
-    var html = HtmlService.createTemplateFromFile('Index');
+    var html = HtmlService.createTemplateFromFile('Index2');
     var sheet_name = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getName();
     html.cases = cases;
     html.user = user;
@@ -235,24 +235,17 @@ function getFeedback() {
   
   var user = Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1);
   var TE_Feedback_sheet = SpreadsheetApp.openById("13QDsOkVGVPMsbqg0_Qyet8cg3y9ySzR3XV9IlDLmEBs").getSheetByName("TE Feedback");
-  var all_feedback = TE_Feedback_sheet.getRange(2, 1, TE_Feedback_sheet.getLastRow(), 8).getValues();
+  var all_feedback = TE_Feedback_sheet.getRange(2, 1, TE_Feedback_sheet.getLastRow(), TE_Feedback_sheet.getLastColumn()).getValues();
   all_feedback = [].concat.apply([], all_feedback);
   var indexes = getAllIndexes(all_feedback, user);
   var feedback = [];
   for (var i = 0; i < indexes.length; i++) {
-    var entry = all_feedback.slice(indexes[i] + 1, indexes[i] + 7);
+    var entry = all_feedback.slice(indexes[i] + 1, indexes[i] + 10);
     entry = entry.map( function (x) {return x.toString()} );
     feedback.push(entry);
   }
   
   return feedback.reverse();
-}
-
-function include(filename) {
-  //Adds stylesheet and javascript to Index.html
-  
-  return HtmlService.createHtmlOutputFromFile(filename)
-      .getContent();
 }
 
 function getFeedbackCase(caseId) {
@@ -261,8 +254,15 @@ function getFeedbackCase(caseId) {
   cases = [].concat.apply([], cases);
   var index = cases.indexOf(caseId);
   if (index != -1) {
-    return cases.slice(index, index + 6)
+    return cases.slice(index, index + 9)
   }
+}
+
+function include(filename) {
+  //Adds stylesheet and javascript to Index.html
+  
+  return HtmlService.createHtmlOutputFromFile(filename)
+      .getContent();
 }
 
 
