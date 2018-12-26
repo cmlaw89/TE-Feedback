@@ -6,10 +6,13 @@
     var selectedIndex = dropdown.selectedIndex;
     var selectedValue = dropdown.options[selectedIndex].value;
     var today = new Date();
-    var basics = document.getElementById("basics_input").value;
-    var lAc = document.getElementById("lAc_input").value;
+    var time = document.getElementById("time_input").value;
+    var mechanics = document.getElementById("mechanics_input").value;
+    var grammar = document.getElementById("grammar_input").value;
+    var terminology = document.getElementById("terminology_input").value;
+    var l_r = document.getElementById("l_r_input").value;
+    var u_f = document.getElementById("u_f_input").value;
     var style = document.getElementById("style_input").value;
-    var non_c = document.getElementById("non_c_input").value;
     var comments = document.getElementById("comments_input").value;
     
     var send = true;
@@ -24,56 +27,60 @@
       document.getElementById("case_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(basics))) {
-      if (parseFloat(basics) < 0 || parseFloat(basics) > 5) {
-        document.getElementById("basics_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("basics_val").innerHTML = "";
-      }
+    if (isNaN(parseFloat(time))) {
+      document.getElementById("time_val").innerHTML = "Please insert a number";
+      send = false;
     }
     else {
-      document.getElementById("basics_val").innerHTML = "Please insert a number between 0 and 5";
+      document.getElementById("time_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(lAc))) {
-      if (parseFloat(lAc) < 0 || parseFloat(lAc) > 5) {
-        document.getElementById("lAc_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("lAc_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(mechanics) == -1) {
+      document.getElementById("mechanics_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("lAc_val").innerHTML = "Please insert a number between 0 and 5";
+      document.getElementById("mechanics_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(style))) {
-      if (parseFloat(style) < 0 || parseFloat(style) > 5) {
-        document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("style_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(grammar) == -1) {
+      document.getElementById("grammar_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("style_val").innerHTML = "Please insert a number between 0 and 5";
+      document.getElementById("grammar_val").innerHTML = "";
     }
     
-    if (!isNaN(parseFloat(non_c))) {
-      if (parseFloat(non_c) < 0 || parseFloat(non_c) > 5) {
-        document.getElementById("non_c_val").innerHTML = "Please insert a number between 0 and 5";
-        send = false;
-      }
-      else {
-        document.getElementById("non_c_val").innerHTML = "";
-      }
+    if (['1', '2', '3'].indexOf(terminology) == -1) {
+      document.getElementById("terminology_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
     }
     else {
-      document.getElementById("non_c_val").innerHTML = "Please insert a number between 0 and 5";
+      document.getElementById("terminology_val").innerHTML = "";
+    }
+    
+    if (['1', '2', '3'].indexOf(l_r) == -1) {
+      document.getElementById("l_r_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("l_r_val").innerHTML = "";
+    }
+    
+    if (['1', '2', '3'].indexOf(u_f) == -1) {
+      document.getElementById("u_f_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("u_f_val").innerHTML = "";
+    }
+    
+    if (['1', '2', '3'].indexOf(style) == -1) {
+      document.getElementById("style_val").innerHTML = "Please insert 1, 2, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("style_val").innerHTML = "";
     }
     
     if (comments == "") {
@@ -89,7 +96,7 @@
       google.script.run
         .withSuccessHandler(google.script.host.close)
         .submitFeedback([today.toString(), user, selectedValue + month, 
-                basics, lAc, style, non_c, comments]);
+                time, mechanics, grammar, terminology, l_r, u_f, style, comments]);
     }
   }
   
@@ -115,18 +122,14 @@
   function onSuccess(my_array) {
     //Updates the feedback input fields with the existing values
     if (my_array) {
-      document.getElementById("basics_input").value = my_array[1];
-      document.getElementById("lAc_input").value = my_array[2];
-      document.getElementById("style_input").value = my_array[3];
-      document.getElementById("non_c_input").value = my_array[4];
-      document.getElementById("comments_input").value = my_array[5];
-    }
-    else {
-      document.getElementById("basics_input").value = "";
-      document.getElementById("lAc_input").value = "";
-      document.getElementById("style_input").value = "";
-      document.getElementById("non_c_input").value = "";
-      document.getElementById("comments_input").value = "";
+      document.getElementById("time_input").value = my_array[1];
+      document.getElementById("mechanics_input").value = my_array[2];
+      document.getElementById("grammar_input").value = my_array[3];
+      document.getElementById("terminology_input").value = my_array[4];
+      document.getElementById("l_r_input").value = my_array[5];
+      document.getElementById("u_f_input").value = my_array[6];
+      document.getElementById("style_input").value = my_array[7];
+      document.getElementById("comments_input").value = my_array[8];
     }
   }
   

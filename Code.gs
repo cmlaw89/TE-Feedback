@@ -43,12 +43,17 @@ function teFeedback() {
                 "DEC": "12"}
   
   var user = Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1)
-  var cases = getCases(user);
+  if (SpreadsheetApp.getActiveSheet().getName().slice(0, 3) == "Jan") {
+    var cases = getCases()
+  }
+  else {
+    var cases = getCasesOld(user);
+  }
   if (cases == false) {
     SpreadsheetApp.getUi().alert("You have no cases assigned for this month.", SpreadsheetApp.getUi().ButtonSet.OK)
   }
   else {
-    var html = HtmlService.createTemplateFromFile('Index2');
+    var html = HtmlService.createTemplateFromFile('Index');
     var sheet_name = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getName();
     html.cases = cases;
     html.user = user;
@@ -71,8 +76,60 @@ function viewFeedback() {
   SpreadsheetApp.getUi().showModalDialog(html, "Submitted Feedback")
 }
 
+function getCases() {
+  //Searches the case ID columns of the active sheet for TE entries (with a green background).
+  //Does not return future cases
+  //Returns an array of the case IDs.
+  
+  var months = {0: "January", 
+                1: "February",
+                2: "March",
+                3: "April",
+                4: "May",
+                5: "June",
+                6: "July",
+                7: "August",
+                8: "September",
+                9: "October",
+                10: "November",
+                11: "December"} 
+                
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var month_sheet = ss.getActiveSheet();
+  
+  //Find the column index of today's date if the current month is selected (add 16 hours to convert to Taipei time)
+  var date = new Date()
+  if (Session.getScriptTimeZone() == "America/Los_Angeles") {
+    date.addHours(16);
+  }
+  var month = date.getMonth();
+  date = date.getDate();
+  //Initialize today_col_index as the last column (this is retained if the current month is not selected)
+  var today_col_index = month_sheet.getLastColumn()
+  if (month_sheet.getName().split(" ")[0] == months[month]) {
+    var date_row = month_sheet.getRange(1, 1, 1, month_sheet.getLastColumn()).getValues()
+    today_col_index = date_row[0].indexOf(date)
+  }
+  
+  //Search column 1 for ###### marker to find the limit of case data
+  var col1 = month_sheet.getRange(1, 1, month_sheet.getLastRow(), 1).getValues()
+  col1 = [].concat.apply([], col1)
+  var foot_index = col1.indexOf('######')
+  
+  //Build case array
+  var cases = []
+  for (var i = 3; i < today_col_index + 2; i++) {
+    var day = month_sheet.getRange(1, i, foot_index - 2, 1).getValues()
+    day = [].concat.apply([], day)
+    var TE_indexes = getAllIndexes(day, "TE")
+    for (var j = 0; j < TE_indexes.length; j++) {
+      cases.push(day[TE_indexes[j] - 1].trim())
+    }
+  }
+  return cases
+}
 
-function getCases(user) {
+function getCasesOld(user) {
   //Searches the case ID columns of the active sheet for TE entries (with a green background).
   //Does not return future cases
   //Returns an array of the case IDs.
@@ -105,7 +162,8 @@ function getCases(user) {
                    "James": "#98c8ff",
                    "Simon": "#ff00ff",
                    "Timothy": "#3ba4ff",
-                   "Nick": "#9c84ff"}
+                   "Nick": "#9c84ff",
+                   "Victoria": "#ffc2bf"}
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var month_sheet = ss.getActiveSheet();
@@ -189,48 +247,26 @@ function submitFeedback(values) {
   feedback_sheet.getRange(feedback_sheet.getLastRow() + 1, 1, 1, values.length).setValues([values]);
 }
 
-
-
 function getOutstanding(cases) {
   //Get list of cases with incomplete feedback for the selected month
   
-  var months = {"JAN": " January", 
-                "FEB": " February",
-                "MAR": " March",
-                "APR": " April",
-                "MAY": " May",
-                "JUN": " June",
-                "JUL": " July",
-                "AUG": " August",
-                "SEP": " September",
-                "OCT": " October",
-                "NOV": " November",
-                "DEC": " December"}
-  
   var TPR_Feedback_sheet = SpreadsheetApp.openById("13QDsOkVGVPMsbqg0_Qyet8cg3y9ySzR3XV9IlDLmEBs").getSheetByName("TE Feedback");  
   var complete = TPR_Feedback_sheet.getRange(2, 3, TPR_Feedback_sheet.getLastRow() - 1, 1).getValues();
+  
   var completed_cases = [];
   for (i = 0; i < complete.length; i++) {
     completed_cases.push(complete[i][0].slice(0, 7));
   }
   
-  var all_cases = [];
-  for (var i = 0; i < Object.keys(cases).length; i++) {
-    var day = Object.keys(cases)[i];
-    all_cases = all_cases.concat(cases[day]);
-  }
-      
-  
   var incomplete_cases = []
-  for (i = 0; i < all_cases.length; i++) {
-    if (completed_cases.indexOf(all_cases[i]) == -1) {
-      incomplete_cases.push(all_cases[i]);
+  for (i = 0; i < cases.length; i++) {
+    if (completed_cases.indexOf(cases[i]) == -1) {
+      incomplete_cases.push(cases[i]);
     }
   }
   
   return incomplete_cases
 }
-
 
 function getFeedback() {
   //Extracts the submitted feedback for the active user
@@ -266,7 +302,6 @@ function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename)
       .getContent();
 }
-
 
 Date.prototype.addHours = function(h){
     this.setHours(this.getHours()+h);
