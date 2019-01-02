@@ -106,7 +106,8 @@ function getCases() {
   date = date.getDate();
   //Initialize today_col_index as the last column (this is retained if the current month is not selected)
   var today_col_index = month_sheet.getLastColumn()
-  if (month_sheet.getName().split(" ")[0] == months[month]) {
+  if ((month_sheet.getName().split(" ")[0] == months[month]) || 
+        (month_sheet.getName().split(" ")[0] == months[month].slice(0, 3))) {
     var date_row = month_sheet.getRange(1, 1, 1, month_sheet.getLastColumn()).getValues()
     today_col_index = date_row[0].indexOf(date)
   }
@@ -123,7 +124,10 @@ function getCases() {
     day = [].concat.apply([], day)
     var TE_indexes = getAllIndexes(day, "TE")
     for (var j = 0; j < TE_indexes.length; j++) {
-      cases.push(day[TE_indexes[j] - 1].trim())
+      var case_id = day[TE_indexes[j] - 1].trim().split("(")[0]
+      if (cases.indexOf(case_id) == -1) {
+        cases.push(case_id)
+      }
     }
   }
   return cases
