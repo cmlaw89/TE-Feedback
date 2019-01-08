@@ -123,7 +123,10 @@ function getCases() {
     day = [].concat.apply([], day)
     var TE_indexes = getAllIndexes(day, "TE")
     for (var j = 0; j < TE_indexes.length; j++) {
-      cases.push(day[TE_indexes[j] - 1].slice(0, 7))
+      var case_id = day[TE_indexes[j] - 1].slice(0, 7)
+      if (cases.indexOf(case_id) == -1) {
+        cases.push(case_id)
+      }
     }
   }
   return cases
