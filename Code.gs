@@ -81,18 +81,18 @@ function getCases() {
   //Does not return future cases
   //Returns an array of the case IDs.
   
-  var months = {0: "January", 
-                1: "February",
-                2: "March",
-                3: "April",
-                4: "May",
-                5: "June",
-                6: "July",
-                7: "August",
-                8: "September",
-                9: "October",
-                10: "November",
-                11: "December"} 
+  var months = {0: "jan", 
+                1: "feb",
+                2: "mar",
+                3: "apr",
+                4: "may",
+                5: "jun",
+                6: "jul",
+                7: "aug",
+                8: "sep",
+                9: "oct",
+                10: "nov",
+                11: "dec"} 
                 
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var month_sheet = ss.getActiveSheet();
@@ -106,8 +106,7 @@ function getCases() {
   date = date.getDate();
   //Initialize today_col_index as the last column (this is retained if the current month is not selected)
   var today_col_index = month_sheet.getLastColumn()
-  if ((month_sheet.getName().split(" ")[0] == months[month]) || 
-        (month_sheet.getName().split(" ")[0] == months[month].slice(0, 3))) {
+  if (month_sheet.getName().split(" ")[0].slice(0,3).toLowerCase() == months[month]) {
     var date_row = month_sheet.getRange(1, 1, 1, month_sheet.getLastColumn()).getValues()
     today_col_index = date_row[0].indexOf(date)
   }
@@ -124,10 +123,7 @@ function getCases() {
     day = [].concat.apply([], day)
     var TE_indexes = getAllIndexes(day, "TE")
     for (var j = 0; j < TE_indexes.length; j++) {
-      var case_id = day[TE_indexes[j] - 1].trim().split("(")[0]
-      if (cases.indexOf(case_id) == -1) {
-        cases.push(case_id)
-      }
+      cases.push(day[TE_indexes[j] - 1].slice(0, 7))
     }
   }
   return cases
