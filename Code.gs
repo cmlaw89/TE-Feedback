@@ -104,23 +104,26 @@ function getCases() {
   }
   var month = date.getMonth();
   date = date.getDate();
-  //Initialize today_col_index as the last column (this is retained if the current month is not selected)
-  var today_col_index = month_sheet.getLastColumn()
-  if (month_sheet.getName().split(" ")[0].slice(0,3).toLowerCase() == months[month]) {
-    var date_row = month_sheet.getRange(1, 1, 1, month_sheet.getLastColumn()).getValues()
-    today_col_index = date_row[0].indexOf(date)
-  }
   
   //Search column 1 for ###### marker to find the limit of case data
   var col1 = month_sheet.getRange(1, 1, month_sheet.getLastRow(), 1).getValues()
   col1 = [].concat.apply([], col1)
   var foot_index = col1.indexOf('######')
+  var head_index = col1.indexOf(month_sheet.getName().split(" ")[0].slice(0,3).toUpperCase())
+  
+  //Initialize today_col_index as the last column (this is retained if the current month is not selected)  
+  var today_col_index = month_sheet.getLastColumn()
+  if (month_sheet.getName().split(" ")[0].slice(0,3).toLowerCase() == months[month]) {
+    var date_row = month_sheet.getRange(head_index + 1, 1, 1, month_sheet.getLastColumn()).getValues()
+    today_col_index = date_row[0].indexOf(date)
+  }
   
   //Build case array
   var cases = []
   for (var i = 3; i < today_col_index + 2; i++) {
     var day = month_sheet.getRange(1, i, foot_index - 2, 1).getValues()
     day = [].concat.apply([], day)
+    Logger.log(day)
     var TE_indexes = getAllIndexes(day, "TE")
     for (var j = 0; j < TE_indexes.length; j++) {
       var case_id = day[TE_indexes[j] - 1].slice(0, 7)
