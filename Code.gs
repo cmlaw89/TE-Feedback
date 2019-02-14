@@ -43,8 +43,8 @@ function teFeedback() {
                 "DEC": "12"}
   
   var user = Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1)
-  if (SpreadsheetApp.getActiveSheet().getName().slice(0, 3) == "Jan") {
-    var cases = getCases()
+  if (parseInt(SpreadsheetApp.getActiveSheet().getName().slice(-4)) > 2018) {
+    var cases = getCases(user)
   }
   else {
     var cases = getCasesOld(user);
@@ -76,7 +76,7 @@ function viewFeedback() {
   SpreadsheetApp.getUi().showModalDialog(html, "Submitted Feedback")
 }
 
-function getCases() {
+function getCases(user) {
   //Searches the case ID columns of the active sheet for TE entries (with a green background).
   //Does not return future cases
   //Returns an array of the case IDs.
@@ -105,25 +105,29 @@ function getCases() {
   var month = date.getMonth();
   date = date.getDate();
   
+  var editor_list = month_sheet.getRange(1, 1, month_sheet.getLastRow(), 1).getValues()
+  editor_list = [].concat.apply([], editor_list)
+  var editor_start_index = editor_list.indexOf(user)
+  
   //Search column 1 for ###### marker to find the limit of case data
-  var col1 = month_sheet.getRange(1, 1, month_sheet.getLastRow(), 1).getValues()
+  var col1 = month_sheet.getRange(editor_start_index, 2, month_sheet.getLastRow(), 1).getValues()
   col1 = [].concat.apply([], col1)
-  var foot_index = col1.indexOf('######')
-  var head_index = col1.indexOf(month_sheet.getName().split(" ")[0].slice(0,3).toUpperCase())
+  col1 = col1.map(function (e) {return e.toLowerCase()})
+  var foot_index = col1.indexOf('######') + editor_start_index
+  var head_index = col1.indexOf(month_sheet.getName().split(" ")[0].slice(0,3).toLowerCase()) + editor_start_index
   
   //Initialize today_col_index as the last column (this is retained if the current month is not selected)  
   var today_col_index = month_sheet.getLastColumn()
   if (month_sheet.getName().split(" ")[0].slice(0,3).toLowerCase() == months[month]) {
-    var date_row = month_sheet.getRange(head_index + 1, 1, 1, month_sheet.getLastColumn()).getValues()
+    var date_row = month_sheet.getRange(head_index, 1, 1, month_sheet.getLastColumn()).getValues()
     today_col_index = date_row[0].indexOf(date)
   }
   
   //Build case array
   var cases = []
-  for (var i = 3; i < today_col_index + 2; i++) {
-    var day = month_sheet.getRange(1, i, foot_index - 2, 1).getValues()
+  for (var i = 4; i < today_col_index + 2; i++) {
+    var day = month_sheet.getRange(head_index, i, foot_index - head_index - 2, 1).getValues()
     day = [].concat.apply([], day)
-    Logger.log(day)
     var TE_indexes = getAllIndexes(day, "TE")
     for (var j = 0; j < TE_indexes.length; j++) {
       var case_id = day[TE_indexes[j] - 1].slice(0, 7)
